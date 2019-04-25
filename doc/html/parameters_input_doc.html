@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Optimization Input Parameters</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-25"><meta name="DC.source" content="parameters_input_doc.m"><style type="text/css">
+      --><title>Poblano Toolbox for MATLAB: Optimization Input Parameters</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-25"><meta name="DC.source" content="parameters_input_doc.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -68,7 +68,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 	background-repeat:no-repeat;
 }
 
-  </style></head><body><div class="background"><a href="index.html"><img area="13494" src="images/logo.gif" alt="Sandia National Laboratories" border="0" height="78" width="173"></a></div><div class="content"><h1>Optimization Input Parameters</h1><!--introduction--><p>Input parameters are passed to the different optimization methods using Matlab <tt>inputParser</tt> objects. Some parameters are shared across all methods and others are specific to a particular method. Below are descriptions of the shared input parameters and examples of how to set and use these parameters in the optimization methods. The Poblano function <tt>poblano_params</tt> is used by the optimization methods to set the input parameters.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">Parameters Shared Across All Methods</a></li><li><a href="#9">Method-Specific Parameters</a></li><li><a href="#11">Default Parameters</a></li><li><a href="#13">Passing Parameters to Methods</a></li></ul></div><p><hr></p><h2 id="2">Parameters Shared Across All Methods</h2><p><b>Display Parameters</b></p><p>The following parameters control the information that is displayed during a run of a Poblano optimizer.</p><pre>Display                 Controls amount of printed output {'iter'}
+  </style></head><body><div class="background"><a href="index.html"><img area="13494" src="images/logo.gif" alt="Sandia National Laboratories" border="0" height="78" width="173"></a></div><div class="content"><h1>Poblano Toolbox for MATLAB: Optimization Input Parameters</h1><!--introduction--><p>Input parameters are passed to the different optimization methods using Matlab <tt>inputParser</tt> objects. Some parameters are shared across all methods and others are specific to a particular method. Below are descriptions of the shared input parameters and examples of how to set and use these parameters in the optimization methods. The Poblano function <tt>poblano_params</tt> is used by the optimization methods to set the input parameters.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">Parameters Shared Across All Methods</a></li><li><a href="#9">Method-Specific Parameters</a></li><li><a href="#11">Default Parameters</a></li><li><a href="#13">Passing Parameters to Methods</a></li></ul></div><p><hr></p><h2 id="2">Parameters Shared Across All Methods</h2><p><b>Display Parameters</b></p><p>The following parameters control the information that is displayed during a run of a Poblano optimizer.</p><pre>Display                 Controls amount of printed output {'iter'}
   'iter'                Display information every iteration
   'final'               Display information only after final iteration
   'off'                 Display no information</pre><pre>DisplayIters            Number of iterations performed before displaying
@@ -237,7 +237,7 @@ ncg(@(x) example1(x,3), pi./[4 5 6]',params);
 </pre><p class="footer"><br>
       Copyright 2019, National Technology &amp; Engineering Solutions of Sandia, LLC (NTESS).<br></p></div><!--
 ##### SOURCE BEGIN #####
-%% Optimization Input Parameters
+%% Poblano Toolbox for MATLAB: Optimization Input Parameters
 % Input parameters are passed to the different optimization methods using
 % Matlab |inputParser| objects. Some parameters are shared across all
 % methods and others are specific to a particular method. Below are

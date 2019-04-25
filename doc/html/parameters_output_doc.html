@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Optimization Output Parameters</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-25"><meta name="DC.source" content="parameters_output_doc.m"><style type="text/css">
+      --><title>Poblano Toolbox for MATLAB: Optimization Output Parameters</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-25"><meta name="DC.source" content="parameters_output_doc.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -68,7 +68,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 	background-repeat:no-repeat;
 }
 
-  </style></head><body><div class="background"><a href="index.html"><img area="13494" src="images/logo.gif" alt="Sandia National Laboratories" border="0" height="78" width="173"></a></div><div class="content"><h1>Optimization Output Parameters</h1><!--introduction--><p>Each of the optimization methods in Poblano outputs a single structure containing fields for the approximate solution, function and gradient values at the solution, and various information about the optimization run (e.g., number of function evaluations, etc.). The Poblano function <tt>poblano_out</tt> is used by the optimization methods to set the output parameters.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">Output Parameters</a></li><li><a href="#4">Optional Trace Output Parameters</a></li><li><a href="#6">Example Output</a></li></ul></div><p><hr></p><h2 id="2">Output Parameters</h2><p>Each of the optimization methods in Poblano outputs a single structure containing fields described below.</p><pre>X                Final iterate</pre><pre>F                Function value at X</pre><pre>G                Gradient at X</pre><pre>Params           Input parameters used for the minimization method (as
+  </style></head><body><div class="background"><a href="index.html"><img area="13494" src="images/logo.gif" alt="Sandia National Laboratories" border="0" height="78" width="173"></a></div><div class="content"><h1>Poblano Toolbox for MATLAB: Optimization Output Parameters</h1><!--introduction--><p>Each of the optimization methods in Poblano outputs a single structure containing fields for the approximate solution, function and gradient values at the solution, and various information about the optimization run (e.g., number of function evaluations, etc.). The Poblano function <tt>poblano_out</tt> is used by the optimization methods to set the output parameters.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">Output Parameters</a></li><li><a href="#4">Optional Trace Output Parameters</a></li><li><a href="#6">Example Output</a></li></ul></div><p><hr></p><h2 id="2">Output Parameters</h2><p>Each of the optimization methods in Poblano outputs a single structure containing fields described below.</p><pre>X                Final iterate</pre><pre>F                Function value at X</pre><pre>G                Gradient at X</pre><pre>Params           Input parameters used for the minimization method (as
                  parsed Matlab inputParser object)</pre><pre>FuncEvals        Number of function evaluations performed</pre><pre>Iters            Number of iterations performed (see individual minimization
                  routines for details on what each iteration consists of</pre><pre>ExitFlag         Termination flag, with one of the following values
                  0 : scaled gradient norm &lt; StopTol input parameter)
@@ -182,7 +182,7 @@ ans =
 </pre><p class="footer"><br>
       Copyright 2019, National Technology &amp; Engineering Solutions of Sandia, LLC (NTESS).<br></p></div><!--
 ##### SOURCE BEGIN #####
-%% Optimization Output Parameters
+%% Poblano Toolbox for MATLAB: Optimization Output Parameters
 %
 % Each of the optimization methods in Poblano outputs a single structure
 % containing fields for the approximate solution, function and gradient
