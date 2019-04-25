@@ -1,0 +1,349 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Limited-Memory BFGS Optimization</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-04-25"><meta name="DC.source" content="lbfgs_doc.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+.background {
+	background-color:#004889;
+	background-image: url(images/banner-background.jpg);
+	background-repeat:no-repeat;
+}
+
+  </style></head><body><div class="background"><a href="index.html"><img area="13494" src="images/logo.gif" alt="Sandia National Laboratories" border="0" height="78" width="173"></a></div><div class="content"><h1>Limited-Memory BFGS Optimization</h1><!--introduction--><p>Limited-memory quasi-Newton methods [2] are a class of methods that compute and/or maintain simple, compact approximations of the Hessian matrices of second derivatives, which are used determining search directions. Poblano includes the limited-memory BFGS (L-BFGS) method, a variant of these methods whose Hessian approximations are based on the BFGS method (see [1] for more details).</p><p>The Poblano function for the L-BFGS method is called <tt>lbfgs</tt>.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#2">Introduction</a></li><li><a href="#7">Method Specific Input Parameters</a></li><li><a href="#9">Default Input Parameters</a></li><li><a href="#12">Examples</a></li><li><a href="#19">References</a></li></ul></div><p><hr></p><h2 id="2">Introduction</h2><p>The general steps of L-BFGS methods are given below in high-level pseudo-code [2]:</p><p><img src="lbfgs_doc_eq02499409918622348759.png" alt="$$&#xA;\begin{tabular}{ll}&#xA;\emph{1.} &amp; Input: $x_0$, a starting point; $M &gt; 0$, an integer\\&#xA;\emph{2.} &amp; Evaluate $f_0 = f(x_0)$, $g_0 = \nabla f(x_0)$\\&#xA;\emph{3.} &amp; Set $p_0 = -g_0$, $\gamma_0 = 1$, $i = 0$\\&#xA;\emph{4.} &amp; \textbf{while} $\|g_i\| &gt; 0$\\&#xA;\emph{5.} &amp; \qquad Choose an initial Hessian approximation: $H_i^0 = \gamma_i I$\\&#xA;\emph{6.} &amp; \qquad Compute a step direction $p_i = -r$ using {\tt TwoLoopRecursion} method\\&#xA;\emph{7.} &amp; \qquad Compute a step length $\alpha_i$ and set $x_{i+1} = x_i + \alpha_i p_i$\\&#xA;\emph{8.} &amp; \qquad Set $g_i = \nabla f(x_{i+1})$\\&#xA;\emph{9.} &amp; \qquad \textbf{if} $i &gt; M$\\&#xA;\emph{10.} &amp; \qquad \qquad Discard vectors $\left\{s_{i-m}, y_{i-m}\right\}$ from storage\\&#xA;\emph{11.} &amp; \qquad \textbf{end if}\\&#xA;\emph{12.} &amp; \qquad \qquad Set and store $s_i = x_{i+1}-x_i$ and $y_i = g_{i+1} - g_i$\\&#xA;\emph{13.} &amp; \qquad Set $i = i + 1$\\&#xA;\emph{14.} &amp; \textbf{end while}\\&#xA;\emph{15.} &amp; Output: $x_i \approx x^*$\\&#xA;\end{tabular}&#xA;$$"></p><p><b>Computing the step direction</b></p><p>In Step 6 in the above method, the computation of the step direction is performed using the following method (assume we are at iteration <img src="lbfgs_doc_eq05671228016298599287.png" alt="$i$">) [2]:</p><p><img src="lbfgs_doc_eq02757236760158446565.png" alt="$$&#xA;\begin{tabular}{ll}&#xA;\multicolumn{2}{l}{\tt TwoLoopRecursion}\\&#xA;\emph{1.} &amp; $q = g_i$\\&#xA;\emph{2.} &amp; \textbf{for} $k = i-1, i-2, \dots, i-m$\\&#xA;\emph{3.} &amp; \qquad $a_k = (s_k^Tq)/(y_k^Ts_k)$\\&#xA;\emph{4.} &amp; \qquad $q = q - a_k y_k$\\&#xA;\emph{5.} &amp; \textbf{end for}\\&#xA;\emph{6.} &amp; $r = H_i^0 q$\\&#xA;\emph{7.} &amp; \textbf{for} $k = i-m, i-m+1, \dots, i-1$\\&#xA;\emph{8.} &amp; \qquad $b = (y_k^Tr) / (y_k^Ts_k)$\\&#xA;\emph{9.} &amp; \qquad $r = r + (a_k - b)s_k$\\&#xA;\emph{10.} &amp; \textbf{end for}\\&#xA;\emph{11.} &amp; Output: $r = H_ig_i$\\&#xA;\end{tabular}&#xA;$$"></p><p><hr></p><h2 id="7">Method Specific Input Parameters</h2><p>The input parameters specific to the <tt>lbfgs</tt> method are presented below. See the <a href="A2_poblano_params_docs.html">Optimization Input Parameters</a> documentation for more details on the Poblano parameters shared across all methods.</p><pre>M        Limited memory parameter {5}</pre><p><hr></p><h2 id="9">Default Input Parameters</h2><p>The default input parameters are returned with the following call to <tt>lbfgs</tt>:</p><pre class="codeinput">params = lbfgs(<span class="string">'defaults'</span>)
+</pre><pre class="codeoutput">
+params = 
+
+  struct with fields:
+
+                   Display: 'iter'
+              DisplayIters: 1
+           LineSearch_ftol: 1.0000e-04
+           LineSearch_gtol: 0.0100
+    LineSearch_initialstep: 1
+         LineSearch_maxfev: 20
+         LineSearch_method: 'more-thuente'
+         LineSearch_stpmax: 1.0000e+15
+         LineSearch_stpmin: 1.0000e-15
+           LineSearch_xtol: 1.0000e-15
+                         M: 5
+              MaxFuncEvals: 10000
+                  MaxIters: 1000
+                RelFuncTol: 1.0000e-06
+                   StopTol: 1.0000e-05
+                 TraceFunc: 0
+            TraceFuncEvals: 0
+                 TraceGrad: 0
+             TraceGradNorm: 0
+              TraceRelFunc: 0
+                    TraceX: 0
+
+</pre><p>See the <a href="A2_poblano_params_docs.html">Optimization Input Parameters</a> documentationfor more details on the Poblano parameters shared across all methods.</p><p><hr></p><h2 id="12">Examples</h2><p>Below are the results of using the <tt>lbfgs</tt> method in Poblano to solve example problems solved using the <tt>ncg</tt> method in the <a href="B_ncg_docs.html">Nonlinear Conjugate Gradient Optimization</a> documentation. Note that the different methods lead to slightly different solutions and a different number of function evaluations.</p><p><b>Example 1</b> (from <a href="A4_poblano_examples_docs.html#4">Poblano Examples</a>)</p><p>In this example, we have <img src="lbfgs_doc_eq00345914025344442474.png" alt="$x \in R^{10}$"> and <img src="lbfgs_doc_eq07165327077797634723.png" alt="$a = 3$">, and use a random starting point.</p><pre class="codeinput">randn(<span class="string">'state'</span>,0);
+x0 = randn(10,1)
+out = lbfgs(@(x) example1(x,3), x0)
+</pre><pre class="codeoutput">
+x0 =
+
+   -0.4326
+   -1.6656
+    0.1253
+    0.2877
+   -1.1465
+    1.1909
+    1.1892
+   -0.0376
+    0.3273
+    0.1746
+
+ Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+     0         1       1.80545257       0.73811114
+     1         5      -4.10636797       0.54564169
+     2         9      -5.78542020       0.51884777
+     3        14      -7.58881458       0.30353965
+     4        18      -8.59871546       0.37732775
+     5        21      -9.18998855       0.36848976
+     6        24      -9.85388944       0.16082452
+     7        26      -9.99944665       0.00997994
+     8        28      -9.99995225       0.00293180
+     9        30      -9.99999998       0.00006204
+    10        32     -10.00000000       0.00000157
+
+out = 
+
+  struct with fields:
+
+             Params: [1&times;1 inputParser]
+           ExitFlag: 0
+    ExitDescription: 'Successful termination based on StopTol'
+                  X: [10&times;1 double]
+                  F: -10.0000
+                  G: [10&times;1 double]
+          FuncEvals: 32
+              Iters: 10
+
+</pre><p><b>Example 2</b> (from <a href="A4_poblano_examples_docs.html#11">Poblano Examples</a>)</p><p>In this example, we compute a rank-4 approximation to a <img src="lbfgs_doc_eq17452142193152507074.png" alt="$4 \times 4$"> Pascal matrix (generated using the Matlab function <tt>pascal(4)</tt>). The starting point is random vector. Note that in the interest of space, Poblano is set to display only the final iteration is this example.</p><pre class="codeinput">m = 4; n = 4; k = 4;
+Data.rank = k;
+Data.A = pascal(m);
+randn(<span class="string">'state'</span>,0);
+x0 = randn((m+n)*k,1);
+out = lbfgs(@(x) example2(x,Data), x0, <span class="string">'Display'</span>, <span class="string">'final'</span>)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    61       128       0.00000004       0.00000971
+
+out = 
+
+  struct with fields:
+
+             Params: [1&times;1 inputParser]
+           ExitFlag: 0
+    ExitDescription: 'Successful termination based on StopTol'
+                  X: [32&times;1 double]
+                  F: 4.1175e-08
+                  G: [32&times;1 double]
+          FuncEvals: 128
+              Iters: 61
+
+</pre><p>As for the <tt>ncg</tt> method, the fact that <tt>out.ExitFlag</tt> &gt; 0 indicates that the method did not converge to the specified tolerance (i.e., using the default <tt>StopTol</tt> input parameter value of <tt>1e-5</tt>). Since the maximum number of function evaluations was exceeded, we can increasing the number of maximum numbers of function evaluations and iterations allowed, and the optimizer converges to a solution within the specified tolerance.</p><pre class="codeinput">out = lbfgs(@(x) example2(x,Data), x0, <span class="string">'MaxIters'</span>,1000, <span class="keyword">...</span>
+    <span class="string">'MaxFuncEvals'</span>,10000,<span class="string">'Display'</span>,<span class="string">'final'</span>)
+</pre><pre class="codeoutput"> Iter  FuncEvals       F(X)          ||G(X)||/N        
+------ --------- ---------------- ----------------
+    61       128       0.00000004       0.00000971
+
+out = 
+
+  struct with fields:
+
+             Params: [1&times;1 inputParser]
+           ExitFlag: 0
+    ExitDescription: 'Successful termination based on StopTol'
+                  X: [32&times;1 double]
+                  F: 4.1175e-08
+                  G: [32&times;1 double]
+          FuncEvals: 128
+              Iters: 61
+
+</pre><p>Verifying the solution, we see that we find a matrix decomposition which fits the matrix with very small relative error (given the stopping tolerance of <tt>1e-5</tt> used by the optimizer).</p><pre class="codeinput">[U,V] = example2_extract(m,n,k,out.X);
+norm(Data.A-U*V')/norm(Data.A)
+</pre><pre class="codeoutput">
+ans =
+
+   1.0273e-05
+
+</pre><p>For Example 2, we see that <tt>lbfgs</tt> requires slightly fewer function evaluations than <tt>ncg</tt> to solve the problem (143 versus 175). Performance of the different methods in Poblano is dependent on both the method and the particular parameters chosen. Thus, it is recommended that several test runs on smaller problems are performed initially using the different methods to help decide which method and set of parameters works best for a particular class of problems.</p><p><hr></p><h2 id="19">References</h2><p>[1] Dennis, Jr., J. E. and Schnabel, R. B. (1996). <i>Numerical Methods for Unconstrained Optimization and Nonlinear Equations</i>. SIAM.</p><p>[2] Nocedal, J. and Wright S. J. (1999). <i>Numerical Optimization</i>. Springer.</p><p class="footer"><br>
+      Copyright 2019, National Technology &amp; Engineering Solutions of Sandia, LLC (NTESS).<br></p></div><!--
+##### SOURCE BEGIN #####
+%% Limited-Memory BFGS Optimization
+% Limited-memory quasi-Newton methods [2] are a class of methods that
+% compute and/or maintain simple, compact approximations of the Hessian
+% matrices of second derivatives, which are used determining search
+% directions. Poblano includes the limited-memory BFGS (L-BFGS) method, a
+% variant of these methods whose Hessian approximations are based on the
+% BFGS method (see [1] for more details).
+%
+% The Poblano function for the L-BFGS method is called |lbfgs|.
+%%
+%
+% <html><hr></html>
+%% Introduction
+% The general steps of L-BFGS methods are given below in high-level
+% pseudo-code [2]:
+%%
+%
+% 
+% $$
+% \begin{tabular}{ll}
+% \emph{1.} & Input: $x_0$, a starting point; $M > 0$, an integer\\
+% \emph{2.} & Evaluate $f_0 = f(x_0)$, $g_0 = \nabla f(x_0)$\\
+% \emph{3.} & Set $p_0 = -g_0$, $\gamma_0 = 1$, $i = 0$\\
+% \emph{4.} & \textbf{while} $\|g_i\| > 0$\\
+% \emph{5.} & \qquad Choose an initial Hessian approximation: $H_i^0 = \gamma_i I$\\
+% \emph{6.} & \qquad Compute a step direction $p_i = -r$ using {\tt TwoLoopRecursion} method\\
+% \emph{7.} & \qquad Compute a step length $\alpha_i$ and set $x_{i+1} = x_i + \alpha_i p_i$\\
+% \emph{8.} & \qquad Set $g_i = \nabla f(x_{i+1})$\\
+% \emph{9.} & \qquad \textbf{if} $i > M$\\
+% \emph{10.} & \qquad \qquad Discard vectors $\left\{s_{i-m}, y_{i-m}\right\}$ from storage\\
+% \emph{11.} & \qquad \textbf{end if}\\
+% \emph{12.} & \qquad \qquad Set and store $s_i = x_{i+1}-x_i$ and $y_i = g_{i+1} - g_i$\\
+% \emph{13.} & \qquad Set $i = i + 1$\\
+% \emph{14.} & \textbf{end while}\\
+% \emph{15.} & Output: $x_i \approx x^*$\\
+% \end{tabular}
+% $$
+%
+%% 
+% *Computing the step direction*
+%
+% In Step 6 in the above method, the computation of the step direction is
+% performed using the following method (assume we are at iteration $i$) [2]:
+%%
+%
+% $$
+% \begin{tabular}{ll}
+% \multicolumn{2}{l}{\tt TwoLoopRecursion}\\
+% \emph{1.} & $q = g_i$\\
+% \emph{2.} & \textbf{for} $k = i-1, i-2, \dots, i-m$\\
+% \emph{3.} & \qquad $a_k = (s_k^Tq)/(y_k^Ts_k)$\\
+% \emph{4.} & \qquad $q = q - a_k y_k$\\
+% \emph{5.} & \textbf{end for}\\
+% \emph{6.} & $r = H_i^0 q$\\
+% \emph{7.} & \textbf{for} $k = i-m, i-m+1, \dots, i-1$\\
+% \emph{8.} & \qquad $b = (y_k^Tr) / (y_k^Ts_k)$\\
+% \emph{9.} & \qquad $r = r + (a_k - b)s_k$\\
+% \emph{10.} & \textbf{end for}\\
+% \emph{11.} & Output: $r = H_ig_i$\\
+% \end{tabular}
+% $$
+%%
+%
+% <html><hr></html>
+%% Method Specific Input Parameters
+%
+% The input parameters specific to the |lbfgs| method are presented below.
+% See the <A2_poblano_params_docs.html Optimization Input Parameters>
+% documentation for more details on the Poblano parameters shared across
+% all methods.
+%
+%  M        Limited memory parameter {5}
+%%
+%
+% <html><hr></html>
+%% Default Input Parameters
+% The default input parameters are returned with the following call to
+% |lbfgs|:
+params = lbfgs('defaults')
+%%
+% 
+% See the <A2_poblano_params_docs.html Optimization Input Parameters>
+% documentationfor more details on the Poblano parameters shared across
+% all methods.
+%%
+%
+% <html><hr></html>
+%% Examples
+% Below are the results of using the |lbfgs| method in Poblano to solve 
+% example problems solved using the |ncg| method in the <B_ncg_docs.html
+% Nonlinear Conjugate Gradient Optimization> documentation. Note that the
+% different methods lead to slightly different solutions and a different
+% number of function evaluations.
+%%
+% *Example 1* (from <A4_poblano_examples_docs.html#4 Poblano Examples>)
+%
+% In this example, we have $x \in R^{10}$ and $a = 3$, and use a random
+% starting point.
+randn('state',0);
+x0 = randn(10,1)
+out = lbfgs(@(x) example1(x,3), x0)
+%%
+% *Example 2* (from <A4_poblano_examples_docs.html#11 Poblano Examples>)
+%
+% In this example, we compute a rank-4 approximation to a $4 \times 4$
+% Pascal matrix (generated using the Matlab function |pascal(4)|). The
+% starting point is random vector. Note that in the interest of space,
+% Poblano is set to display only the final iteration is this example.
+m = 4; n = 4; k = 4; 
+Data.rank = k; 
+Data.A = pascal(m);
+randn('state',0);
+x0 = randn((m+n)*k,1);
+out = lbfgs(@(x) example2(x,Data), x0, 'Display', 'final')
+%%
+%
+% As for the |ncg| method, the fact that
+% |out.ExitFlag| > 0 indicates that the method did not
+% converge to the specified tolerance (i.e., using the default |StopTol|
+% input parameter value of |1e-5|). Since the maximum number of function
+% evaluations was exceeded, we can increasing the number of maximum numbers
+% of function evaluations and iterations allowed, and the optimizer
+% converges to a solution within the specified tolerance.
+out = lbfgs(@(x) example2(x,Data), x0, 'MaxIters',1000, ...
+    'MaxFuncEvals',10000,'Display','final')
+%%
+%
+% Verifying the solution, we see that we find a matrix decomposition which
+% fits the matrix with very small relative error (given the stopping
+% tolerance of |1e-5| used by the optimizer).
+[U,V] = example2_extract(m,n,k,out.X);
+norm(Data.A-U*V')/norm(Data.A)
+%%
+%
+% For Example 2, we see that |lbfgs| requires slightly fewer
+% function evaluations than |ncg| to solve the problem (143 versus
+% 175). Performance of the different methods in Poblano is dependent on
+% both the method and the particular parameters chosen. Thus, it is
+% recommended that several test runs on smaller problems are performed
+% initially using the different methods to help decide which method and set
+% of parameters works best for a particular class of problems.
+%%
+%
+% <html><hr></html>
+%% References
+%
+% [1] Dennis, Jr., J. E. and Schnabel, R. B. (1996). _Numerical Methods 
+% for Unconstrained Optimization and Nonlinear Equations_. SIAM.
+%
+% [2] Nocedal, J. and Wright S. J. (1999). 
+% _Numerical Optimization_. Springer.
+
+
+##### SOURCE END #####
+--></body></html>
