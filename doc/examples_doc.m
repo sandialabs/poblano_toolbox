@@ -1,4 +1,4 @@
-%% Poblano Examples
+%% Poblano Toolbox for MATLAB: Examples
 % This section describes the examples provided with Poblano. These examples
 % can be used as templates for other function/gradient M-files.
 %%

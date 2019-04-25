@@ -1,4 +1,4 @@
-%% Checking Gradient Calculations
+%% Poblano Toolbox for MATLAB: Checking Gradient Calculations
 % Analytic gradients can be checked using finite difference approximations.
 % The Poblano function |gradientcheck| computes the gradient approximations
 % and compares the results to the analytic gradient using a user-supplied

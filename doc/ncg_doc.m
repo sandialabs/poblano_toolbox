@@ -1,4 +1,4 @@
-%% Nonlinear Conjugate Gradient Optimization
+%% Poblano Toolbox for MATLAB: Nonlinear Conjugate Gradient Optimization
 % Nonlinear conjugate gradient (NCG) methods [3] are used to solve 
 % unconstrained nonlinear optimization problems. They are extensions of the
 % conjugate gradient iterative method for solving linear systems adapted to

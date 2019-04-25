@@ -1,4 +1,4 @@
-%% Truncated Newton Optimization
+%% Poblano Toolbox for MATLAB: Truncated Newton Optimization
 % Truncated Newton (TN) methods for minimization are Newton methods in
 % which the Newton direction is only approximated at each iteration (thus
 % reducing computation). Furthermore, the Poblano implementation of the

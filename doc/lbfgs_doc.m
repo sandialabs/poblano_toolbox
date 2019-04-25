@@ -1,4 +1,4 @@
-%% Limited-Memory BFGS Optimization
+%% Poblano Toolbox for MATLAB: Limited-Memory BFGS Optimization
 % Limited-memory quasi-Newton methods [2] are a class of methods that
 % compute and/or maintain simple, compact approximations of the Hessian
 % matrices of second derivatives, which are used determining search

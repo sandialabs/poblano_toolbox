@@ -1,4 +1,4 @@
-%% Optimization Output Parameters
+%% Poblano Toolbox for MATLAB: Optimization Output Parameters
 %
 % Each of the optimization methods in Poblano outputs a single structure
 % containing fields for the approximate solution, function and gradient

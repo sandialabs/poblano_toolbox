@@ -1,4 +1,4 @@
-%% Toolbox Overview
+%% Poblano Toolbox for MATLAB: Overview
 % Poblano is a toolbox of large-scale algorithms for nonlinear
 % optimization. The algorithms in Poblano require only first-order
 % derivative information (e.g., gradients for scalar-valued objective

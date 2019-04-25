@@ -1,4 +1,4 @@
-%% Optimization Input Parameters
+%% Poblano Toolbox for MATLAB: Optimization Input Parameters
 % Input parameters are passed to the different optimization methods using
 % Matlab |inputParser| objects. Some parameters are shared across all
 % methods and others are specific to a particular method. Below are
