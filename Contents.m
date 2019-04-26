@@ -1,5 +1,5 @@
 % Poblano Toolbox (Sandia National Labs)
-% Version 1.1 30-JAN-2012
+% Version 1.2 26-APR-2019
 % 
 % Poblano Toolbox for large-scale nonlinear optimization.
 % 
