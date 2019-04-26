@@ -8,7 +8,6 @@ Once you have a version of the Poblano Toolbox for MATLAB:
 
         addpath(pwd) %<-- Add the Poblano toolbox to the MATLAB path
         savepath %<-- Save for future MATLAB sessions
-
-or enter the following command:
+  or enter the following command:
 
         install_poblano
