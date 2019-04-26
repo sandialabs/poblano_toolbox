@@ -1,26 +1,15 @@
-To install the Poblano Toolbox for MATLAB:
+You can obtain a copy of the Poblano Toolbox for MATLAB as follows:
+* Clone or download the `master` branch of the git repository at https://github.com/sandialabs/poblano_toolbox
+* Download a released version at https://github.com/sandialabs/poblano_toolbox/releases
 
-1. Unpack the compressed file. In a linux environment, for example, this can
-   be done from the command line via:
-
-     unzip poblano_toolbox_1.1.zip
-
-   *or*
-
-     gunzip -c poblano_toolbox_1.1.tgz | tar xvf -
-
-   This should create a directory named *poblano_toolbox_1.1*.
-
-2. Rename the root directory from *poblano_toolbox_1.1* to *poblano_toolbox*.
-
-3. Start MATLAB.
-
-4. Within MATLAB, cd to the *poblano_toolbox* directory and execute the
-   following commands:
-
-     addpath(pwd) %<-- Add the Poblano toolbox to the MATLAB path
-     savepath %<-- Save for future MATLAB sessions
-
-   OR enter the following command:
-
-     install_poblano
+Once you have a version of the Poblano Toolbox for MATLAB:
+* Start MATLAB.
+* Within MATLAB, change to the `poblano_toolbox` directory from above and execute the following commands:
+```MATLAB
+addpath(pwd) %<-- Add the Poblano toolbox to the MATLAB path
+savepath %<-- Save for future MATLAB sessions
+```
+or enter the following command:
+```MATLAB
+install_poblano
+```
