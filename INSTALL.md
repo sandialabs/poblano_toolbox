@@ -1,3 +1,5 @@
+## Installing Poblano Toolbox for MATLAB
+
 You can obtain a copy of the Poblano Toolbox for MATLAB as follows:
 * Clone or download the `master` branch of the git repository at https://github.com/sandialabs/poblano_toolbox
 * Download a released version at https://github.com/sandialabs/poblano_toolbox/releases
