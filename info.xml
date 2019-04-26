@@ -7,7 +7,7 @@
 <name>Poblano</name>
 <type>toolbox</type>
 <icon>$toolbox/matlab/icons/unknownicon.gif</icon>
-<help_location>doc/html</help_location>
+<help_location>doc</help_location>
 
 <list>
   <listitem>
