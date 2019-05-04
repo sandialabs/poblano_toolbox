@@ -3,6 +3,7 @@
 
 # Contributors
 * Evrim Acar - Original author
+* Daniel M. Dunlavy - Original author, tests
 * Tamara G. Kolda - Original author
 * Dianne P. O'Leary - ```cstep.m```, ```cvsrch.m```
 
