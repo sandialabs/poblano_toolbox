@@ -112,10 +112,10 @@ elseif (out.Iters > 0) && (relfit <= params.Results.RelFuncTol)
     % relative fit tolerance is reached
     out.ExitFlag=3;            
     out.ExitDescription = 'Relative change in F < RelFuncTol';
-elseif isnan(f) || sum(isnan(g)) || isnan(g2norm)
+elseif ~isfinite(f) || sum(~isfinite(g)) || ~isfinite(g2norm)
     % new point found results in NaNs
     out.ExitFlag = 4;
-    out.ExitDescription = 'NaNs found in F, G, or norm(G)';
+    out.ExitDescription = 'NaN/Inf found in F, G, or norm(G)';
 end
 
 %% Display iteration information
