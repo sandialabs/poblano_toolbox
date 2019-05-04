@@ -27,5 +27,5 @@
 
 - [ ] **Create Pull Request** At any point, create a work-in-progress pull request, referencing the issue number and with this checklist and `WIP` in the header.
 
-- [ ] **Finalize Pull Request** Once all of the items of this checklist in the pull request have been completed, remove `WIP` from the title of the merge requests and add the Comment, "Completed, ready to submit."
+- [ ] **Finalize Pull Request** Once all of the items of this checklist in the pull request have been completed, remove `WIP` from the title of the merge requests and add the Comment, "Completed, ready to submit", and check this item as completed.
 
