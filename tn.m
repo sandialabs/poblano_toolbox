@@ -118,7 +118,6 @@ while out.ExitFlag == -1
             cgTol = min(1-eps,min(0.5,ngk)*ngk);       % quadratic convergence
         case 'superlinear'
             cgTol = min(1-eps,min(0.5,sqrt(ngk))*ngk); % superlinear convergence
-        otherwise
     end
     
     % Setup Hessian vector product finite difference approximation
